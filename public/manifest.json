@@ -1,0 +1,16 @@
+{
+  "name": "Murmur",
+  "short_name": "Murmur",
+  "description": "Voice-first task manager",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fbfbfa",
+  "theme_color": "#2563eb",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml"
+    }
+  ]
+}

@@ -1,0 +1,105 @@
+/* Murmur Design Tokens - Precision Warm Neutrals & Deep Ink Blue Accent */
+:root {
+  /* Neutral Scale (Warm-tinted, 11 steps) */
+  --neutral-50: #fbfbfa;
+  --neutral-100: #f4f4f1;
+  --neutral-200: #eae9e5;
+  --neutral-300: #dcdad4;
+  --neutral-400: #b5b2aa;
+  --neutral-500: #8c8980;
+  --neutral-600: #65635c;
+  --neutral-700: #46443f;
+  --neutral-800: #2d2c29;
+  --neutral-900: #1b1a18;
+  --neutral-950: #10100f;
+
+  /* Accent: Deep confident ink-blue */
+  --accent-50: #eff6ff;
+  --accent-100: #dbeafe;
+  --accent-200: #bfdbfe;
+  --accent-300: #93c5fd;
+  --accent-400: #60a5fa;
+  --accent-500: #3b82f6;
+  --accent-600: #2563eb;
+  --accent-700: #1d4ed8;
+  --accent-800: #1e40af;
+  --accent-900: #1e3a8a;
+  --accent-950: #0f172a;
+
+  /* Semantic - Light */
+  --success-bg: #eefaf0;
+  --success-fg: #15803d;
+  --warning-bg: #fffbeb;
+  --warning-fg: #b45309;
+  --danger-bg: #fef2f2;
+  --danger-fg: #b91c1c;
+
+  /* Priority Tokens */
+  --priority-urgent-bg: #fee2e2;
+  --priority-urgent-fg: #dc2626;
+  --priority-high-bg: #ffedd5;
+  --priority-high-fg: #ea580c;
+  --priority-medium-bg: #fef9c3;
+  --priority-medium-fg: #ca8a04;
+  --priority-low-bg: #f1f5f9;
+  --priority-low-fg: #64748b;
+
+  /* Surfaces & Canvas */
+  --bg-app: var(--neutral-50);
+  --bg-surface: #ffffff;
+  --bg-surface-elevated: #ffffff;
+  --bg-subtle: var(--neutral-100);
+  --border-subtle: var(--neutral-200);
+  --border-strong: var(--neutral-300);
+
+  /* Typography Colors */
+  --text-primary: var(--neutral-900);
+  --text-secondary: var(--neutral-600);
+  --text-tertiary: var(--neutral-400);
+
+  /* Elevation */
+  --shadow-sm: 0 1px 2px 0 rgba(27, 26, 24, 0.04);
+  --shadow-md: 0 4px 12px -2px rgba(27, 26, 24, 0.06), 0 2px 6px -1px rgba(27, 26, 24, 0.03);
+  --shadow-lg: 0 12px 28px -4px rgba(27, 26, 24, 0.08), 0 4px 12px -2px rgba(27, 26, 24, 0.04);
+
+  /* Geometry & Grid */
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+}
+
+/* Dark Mode Tokens */
+.dark {
+  --bg-app: #121211;
+  --bg-surface: #1a1a18;
+  --bg-surface-elevated: #232220;
+  --bg-subtle: #252422;
+  --border-subtle: #2d2c29;
+  --border-strong: #3d3b36;
+
+  --text-primary: #fbfbfa;
+  --text-secondary: #b5b2aa;
+  --text-tertiary: #65635c;
+
+  --success-bg: rgba(22, 101, 52, 0.2);
+  --success-fg: #4ade80;
+  --warning-bg: rgba(180, 83, 9, 0.2);
+  --warning-fg: #fcd34d;
+  --danger-bg: rgba(185, 28, 28, 0.2);
+  --danger-fg: #f87171;
+
+  --priority-urgent-bg: rgba(220, 38, 38, 0.2);
+  --priority-urgent-fg: #fca5a5;
+  --priority-high-bg: rgba(234, 88, 12, 0.2);
+  --priority-high-fg: #fdba74;
+  --priority-medium-bg: rgba(202, 138, 4, 0.2);
+  --priority-medium-fg: #fef08a;
+  --priority-low-bg: rgba(100, 116, 139, 0.2);
+  --priority-low-fg: #cbd5e1;
+
+  --shadow-sm: none;
+  --shadow-md: 0 0 0 1px var(--border-subtle);
+  --shadow-lg: 0 0 0 1px var(--border-strong), 0 8px 24px rgba(0, 0, 0, 0.4);
+}

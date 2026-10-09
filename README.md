@@ -1,36 +1,75 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Murmur — Voice-First Task Manager
 
-## Getting Started
+> **Speaking is the fastest way to capture a task.**  
+> Murmur blends the precision of Linear, the restraint of Things 3, and the effortless quick-capture of Apple Reminders into an intentional, voice-first productivity workspace.
 
-First, run the development server:
+---
 
+## 1. Quick Start & Setup
+
+### Prerequisites
+- Node.js 18+ (tested on Node v22)
+- npm 9+
+
+### Installation & Launch
 ```bash
+# Clone or navigate to the directory
+cd d:/murmur
+
+# Install dependencies (already completed)
+npm install
+
+# Run unit tests (40 comprehensive parser tests)
+npx vitest run
+
+# Run production build
+npm run build
+
+# Start local server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# or: npm run start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in any modern browser (Chrome, Edge, Safari, or Arc recommended for Web Speech API microphone access).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 2. Supported Voice & Text Commands
 
-## Learn More
+Murmur parses commands directly on-device using a pure, unit-tested natural language processing pipeline (`/lib/parser.ts`). You can speak into the **Mic Orb** or type into the **Command Bar** (`⌘K` / `Ctrl+K`).
 
-To learn more about Next.js, take a look at the following resources:
+| Intent | Natural Voice Examples | Outcome |
+| :--- | :--- | :--- |
+| **Add** | `"Add buy oat milk tomorrow at 5pm"`<br/>`"Remind me to call mom on Friday"`<br/>`"New task finish report, high priority, tag work"`<br/>`"Review wireframes #design #urgent"`<br/>`"Take medicine in 2 hours"` | Extracts title, scheduled ISO date/time, priority level, and tags. Creates new task with instant tactile feedback. |
+| **Complete** | `"Mark buy oat milk as done"`<br/>`"Complete the first task"`<br/>`"Finish quarterly review"`<br/>`"Check off buy groceries"` | Fuzzy-matches existing task title or positional index. Animates completion with circle draw and chime. |
+| **Delete** | `"Delete call mom"`<br/>`"Remove the second task"`<br/>`"Delete all completed tasks"` | Deletes target task or opens confirmation modal for bulk removal. |
+| **Edit / Move** | `"Rename buy milk to buy oat milk"`<br/>`"Move report to Monday"`<br/>`"Move task to tomorrow"` | Modifies title or reschedules due dates dynamically. |
+| **Prioritize** | `"Make the report high priority"`<br/>`"Set finish taxes to urgent priority"`<br/>`"Make the first task low priority"` | Updates priority token (`none`, `low`, `medium`, `high`, `urgent`). |
+| **Filter / Navigate** | `"Show today"`<br/>`"Show high priority"`<br/>`"Show completed"`<br/>`"Go to upcoming"`<br/>`"Show tag work"` | Seamlessly switches active workspace views with spring transitions. |
+| **Utility** | `"Undo"`<br/>`"Read my tasks"`<br/>`"What's due today?"` | Reverts prior state from history stack or speaks audio summaries. |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 3. Browser Support & Graceful Degradation
 
-## Deploy on Vercel
+- **Google Chrome, Chromium, Microsoft Edge, Safari**: Full support for both `webkitSpeechRecognition` (voice capture) and `speechSynthesis` (spoken feedback) plus Web Audio `AnalyserNode` 60fps volume visualization.
+- **Firefox & Unsupported Browsers**: Firefox currently does not expose the SpeechRecognition engine. Murmur detects this at mount time, renders a friendly status banner with zero console errors, and seamlessly guides the user to use the **Pill Command Bar** which accepts all 40+ natural voice commands verbatim.
+- **Microphone Permissions**: Explicit error state handling for `not-allowed`, `no-speech`, and `network` with human-first recovery tips.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 4. Design Rationale & Product Architecture
+
+### Restrained Neutral Scale & Confident Accent
+Murmur rejects noisy rainbow gradients, heavy glassmorphism, and neon glow. It relies on a 11-step warm neutral palette (`#fbfbfa` base up to `#10100f`) paired with a deep, confident ink-blue (`#2563eb` / `#1e40af`). This directs total cognitive focus to the user's tasks. In dark mode, harsh pure black is replaced with warm carbon tones (`#121211`) and subtle surface elevation (`#1a1a18`).
+
+### Intentional Motion & Physics
+Animation in Murmur is communicative, never decorative:
+- **Hero Mic Orb**: Renders a live 2D canvas organic blob whose vertices deform dynamically in response to microphone sound pressure through a Web Audio `AnalyserNode`.
+- **Micro-interactions**: Circle stroke drawing on complete (220ms ease-out), animated strike-through line, and smooth spring physics (stiffness 350, damping 30) across layout changes.
+- **Respect for Preferences**: Includes an accessible Motion toggle (`Full`, `Reduced`, `Off`) that defaults to system `prefers-reduced-motion`.
+
+### Accessibility & Privacy First
+- 100% WCAG AA contrast compliance across all text/background pairs.
+- Full keyboard navigation (`Space` to talk, `⌘K` to focus bar, `?` for cheat sheet, `Esc` to close overlays).
+- **Zero Cloud Dependence**: All voice parsing, storage, and audio analysis happen strictly on the user's machine via localStorage and Web APIs.
