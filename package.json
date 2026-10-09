@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test": "vitest run",
+    "build:ext": "npm --prefix extension run build",
+    "dev:ext": "npm --prefix extension run dev"
   },
   "dependencies": {
     "canvas-confetti": "^1.9.4",

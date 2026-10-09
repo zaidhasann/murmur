@@ -59,6 +59,24 @@ export function useSpeechRecognition({
     }
   }, []);
 
+  // Quick fallback simulation test helper for browsers without webkitSpeechRecognition (e.g. Firefox)
+  const simulateVoiceInput = useCallback((phrase: string) => {
+    setState('listening');
+    setInterimTranscript(phrase.slice(0, Math.floor(phrase.length / 2)));
+    setTimeout(() => {
+      setInterimTranscript(phrase);
+    }, 400);
+    setTimeout(() => {
+      setInterimTranscript('');
+      setFinalTranscript(phrase);
+      setState('processing');
+      if (onResult) {
+        onResult(phrase);
+      }
+      setTimeout(() => setState('idle'), 600);
+    }, 1100);
+  }, [onResult]);
+
   // Web Audio Analyser cleanup
   const stopAudioAnalysis = useCallback(() => {
     if (animFrameRef.current) {
@@ -250,5 +268,6 @@ export function useSpeechRecognition({
     startListening,
     stopListening,
     toggleListening,
+    simulateVoiceInput,
   };
 }

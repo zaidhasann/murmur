@@ -73,3 +73,45 @@ Animation in Murmur is communicative, never decorative:
 - 100% WCAG AA contrast compliance across all text/background pairs.
 - Full keyboard navigation (`Space` to talk, `⌘K` to focus bar, `?` for cheat sheet, `Esc` to close overlays).
 - **Zero Cloud Dependence**: All voice parsing, storage, and audio analysis happen strictly on the user's machine via localStorage and Web APIs.
+
+---
+
+## 5. Chrome Extension (Manifest V3)
+
+Murmur includes a dedicated Manifest V3 Chrome Extension sharing 100% of the underlying parser, storage adapter, components, and design system.
+
+### Build & Load Unpacked Instructions
+1. Build the extension bundle:
+   ```bash
+   npm run build:ext
+   ```
+2. Open Google Chrome or Microsoft Edge and navigate to:
+   ```text
+   chrome://extensions
+   ```
+3. Enable **Developer mode** (toggle in top-right corner).
+4. Click **Load unpacked** and select the folder:
+   ```text
+   D:\murmur\extension\dist
+   ```
+
+### Extension Surfaces
+1. **Floating Mic Orb Bubble (Surface 1)**:
+   - Injected into the top frame of every page inside an isolated closed Shadow DOM (`:host { all: initial }`).
+   - Drag anywhere on the page; snaps to the nearest edge with a spring animation.
+   - Idle half-tuck after 3 seconds; slides back out on hover.
+   - Shows badge with open tasks due today.
+   - Global keyboard shortcut: <kbd>Ctrl+Shift+Space</kbd> (or <kbd>Cmd+Shift+Space</kbd> on macOS).
+2. **Expanded Widget (Surface 2)**:
+   - 340×480 morphing container with tabbed views (*Today*, *Upcoming*, *Completed*), real-time command bar, and inline task detail sheets.
+   - Secure voice capture executed via an extension-origin iframe (`voice.html`) using strict session nonce and origin verification.
+3. **Side Panel (Surface 3)**:
+   - Built on `chrome.sidePanel` providing the complete responsive Murmur view directly alongside your browsing.
+   - Click the toolbar extension icon or select *"Open in Side Panel"* from the widget header.
+
+### Permissions Rationale
+- `storage`: Enables `chrome.storage.local` synchronization across all browser tabs, widget, side panel, and options page.
+- `alarms`: Recreates background timers for tasks with `dueAt` dates.
+- `notifications`: Triggers actionable alerts (*Done* / *Snooze 10m*) when tasks are due.
+- `sidePanel`: Powers the persistent Murmur companion side panel.
+

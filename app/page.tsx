@@ -237,6 +237,7 @@ export default function MurmurApp() {
     isSupported,
     audioVolume,
     toggleListening,
+    simulateVoiceInput,
   } = useSpeechRecognition({
     language: settings.language,
     onResult: (text) => {
@@ -455,12 +456,22 @@ export default function MurmurApp() {
           />
         </div>
 
-        {/* Browser Unsupported Notice Banner */}
+        {/* Browser Unsupported Notice Banner with Interactive Voice Simulation */}
         {!isSupported && (
-          <div className="mb-6 p-3 rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 text-xs text-amber-800 dark:text-amber-200 flex items-center justify-between">
-            <span>
-              Voice recognition is not available in your browser engine. You can type all natural voice commands directly into the command bar!
-            </span>
+          <div className="mb-6 p-3.5 rounded-xl bg-amber-50/90 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800 text-xs text-amber-900 dark:text-amber-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-sm">
+            <div className="flex-1">
+              <span className="font-semibold block mb-0.5">Microphone engine unsupported in this browser:</span>
+              <span>Web Speech API is native to Chrome, Edge, and Safari. You can test voice parsing right now with one click:</span>
+            </div>
+            <div className="flex items-center gap-2 shrink-0">
+              <button
+                type="button"
+                onClick={() => simulateVoiceInput('Add buy coffee tomorrow at 4pm')}
+                className="px-2.5 py-1.5 rounded-md bg-amber-200/80 hover:bg-amber-300 dark:bg-amber-800 dark:hover:bg-amber-700 text-amber-900 dark:text-amber-100 font-medium text-[11px] transition-colors"
+              >
+                🎙️ Simulate Voice
+              </button>
+            </div>
           </div>
         )}
 
