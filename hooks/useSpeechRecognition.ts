@@ -28,6 +28,11 @@ interface IWindowWithSpeech extends Window {
   webkitSpeechRecognition?: any;
 }
 
+function isAndroidBrowser() {
+  if (typeof navigator === 'undefined') return false;
+  return /Android/i.test(navigator.userAgent);
+}
+
 export function useSpeechRecognition({
   language = 'en-US',
   onResult,
@@ -178,7 +183,11 @@ export function useSpeechRecognition({
 
       recognition.onstart = () => {
         setState('listening');
-        startAudioAnalysis();
+        // Android's speech service owns the microphone while recognition is
+        // active. Opening a second getUserMedia stream can stop recognition.
+        if (!isAndroidBrowser()) {
+          startAudioAnalysis();
+        }
       };
 
       recognition.onresult = (event: SpeechRecognitionEvent) => {
@@ -215,13 +224,15 @@ export function useSpeechRecognition({
         switch (event.error) {
           case 'not-allowed':
           case 'service-not-allowed':
-            setErrorMessage('Microphone access was denied. Please allow microphone permission in your browser address bar.');
+            setErrorMessage(
+              'Microphone access was denied. On Android, open Chrome site settings, allow Microphone, then reload this page.'
+            );
             break;
           case 'no-speech':
             setErrorMessage('No speech detected. Tap the mic and try speaking closer.');
             break;
           case 'network':
-            setErrorMessage('Network connection lost for speech synthesis. Try typing in the command bar.');
+            setErrorMessage('Android speech recognition could not reach its speech service. Check your connection and try again.');
             break;
           case 'audio-capture':
             setErrorMessage('No microphone was found. Please connect an audio input device.');
@@ -246,7 +257,11 @@ export function useSpeechRecognition({
     } catch {
       stopAudioAnalysis();
       setState('error');
-      setErrorMessage('Unable to initialize microphone. Please check permissions.');
+      setErrorMessage(
+        isAndroidBrowser()
+          ? 'Unable to start Android voice input. Use Chrome over HTTPS and allow Microphone access in site settings.'
+          : 'Unable to initialize microphone. Please check permissions.'
+      );
     }
   }, [language, onResult, startAudioAnalysis, stopAudioAnalysis]);
 

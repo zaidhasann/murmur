@@ -30,7 +30,7 @@ npm run dev
 # or: npm run start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in any modern browser (Chrome, Edge, Safari, or Arc recommended for Web Speech API microphone access).
+Open [http://localhost:3000](http://localhost:3000) in any modern browser (Chrome, Edge, Safari, or Arc recommended for Web Speech API microphone access). On Android, use the web app in Chrome; the desktop Chrome extension is not supported on Android.
 
 ---
 
@@ -52,7 +52,8 @@ Murmur parses commands directly on-device using a pure, unit-tested natural lang
 
 ## 3. Browser Support & Graceful Degradation
 
-- **Google Chrome, Chromium, Microsoft Edge, Safari**: Full support for both `webkitSpeechRecognition` (voice capture) and `speechSynthesis` (spoken feedback) plus Web Audio `AnalyserNode` 60fps volume visualization.
+- **Google Chrome, Chromium, Microsoft Edge, Safari**: Support for both `webkitSpeechRecognition` (voice capture) and `speechSynthesis` (spoken feedback) plus Web Audio `AnalyserNode` 60fps volume visualization.
+- **Android Chrome**: Use the web app directly over HTTPS, grant Microphone permission in Chrome's site settings, and tap the voice button. Android speech recognition owns the microphone while listening, so the visualizer is intentionally simplified to avoid competing for the same audio stream.
 - **Firefox & Unsupported Browsers**: Firefox currently does not expose the SpeechRecognition engine. Murmur detects this at mount time, renders a friendly status banner with zero console errors, and seamlessly guides the user to use the **Pill Command Bar** which accepts all 40+ natural voice commands verbatim.
 - **Microphone Permissions**: Explicit error state handling for `not-allowed`, `no-speech`, and `network` with human-first recovery tips.
 
@@ -114,4 +115,3 @@ Murmur includes a dedicated Manifest V3 Chrome Extension sharing 100% of the und
 - `alarms`: Recreates background timers for tasks with `dueAt` dates.
 - `notifications`: Triggers actionable alerts (*Done* / *Snooze 10m*) when tasks are due.
 - `sidePanel`: Powers the persistent Murmur companion side panel.
-

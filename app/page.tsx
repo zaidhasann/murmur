@@ -461,7 +461,7 @@ export default function MurmurApp() {
           <div className="mb-6 p-3.5 rounded-xl bg-amber-50/90 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800 text-xs text-amber-900 dark:text-amber-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-sm">
             <div className="flex-1">
               <span className="font-semibold block mb-0.5">Microphone engine unsupported in this browser:</span>
-              <span>Web Speech API is native to Chrome, Edge, and Safari. You can test voice parsing right now with one click:</span>
+              <span>Open Murmur in Chrome for Android over HTTPS and allow Microphone access, or use the typed command bar:</span>
             </div>
             <div className="flex items-center gap-2 shrink-0">
               <button

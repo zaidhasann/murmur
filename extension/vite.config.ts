@@ -18,5 +18,11 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     emptyOutDir: true,
+    rollupOptions: {
+      input: {
+        permission: path.resolve(__dirname, 'src/permission/permission.html'),
+        voice: path.resolve(__dirname, 'src/voice/voice.html'),
+      },
+    },
   },
 });
