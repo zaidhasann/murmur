@@ -12,6 +12,7 @@
     "dev:ext": "npm --prefix extension run dev"
   },
   "dependencies": {
+    "@vercel/analytics": "^2.0.1",
     "canvas-confetti": "^1.9.4",
     "date-fns": "^4.4.0",
     "framer-motion": "^14.1.0",
